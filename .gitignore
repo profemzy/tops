@@ -36,6 +36,8 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+.venv/
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

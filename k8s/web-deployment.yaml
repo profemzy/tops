@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: titansops-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titansops
+      component: web
+  template:
+    metadata:
+      labels:
+        app: titansops
+        component: web
+    spec:
+      containers:
+      - name: web
+        image: titansops:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "512Mi"
+        livenessProbe:
+          httpGet:
+            path: /up
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 60
+          timeoutSeconds: 3
+          failureThreshold: 3
+        env:
+        - name: FLASK_APP
+          value: "titansops.app"
+        - name: FLASK_DEBUG
+          value: "false"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DATABASE_USERNAME
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DATABASE_PASSWORD
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DATABASE_HOST
+        volumeMounts:
+        - name: public
+          mountPath: /app/public
+      volumes:
+      - name: public
+        emptyDir: {}

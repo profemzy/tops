@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: titansops-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titansops
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: titansops
+        component: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.4.2-bookworm
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-pvc

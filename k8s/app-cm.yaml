@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: titansops-config
+data:
+  FLASK_APP: "titansops.app"
+  FLASK_DEBUG: "false"
+  FLASK_SKIP_DOTENV: "true"
+  PYTHONUNBUFFERED: "true"

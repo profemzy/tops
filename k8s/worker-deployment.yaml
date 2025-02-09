@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: titansops-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titansops
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: titansops
+        component: worker
+    spec:
+      containers:
+      - name: worker
+        image: titansops:latest
+        command: ["celery"]
+        args: ["-A", "titansops.app.celery_app", "worker", "-l", "info"]
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        env:
+        - name: FLASK_APP
+          value: "titansops.app"
+        - name: FLASK_DEBUG
+          value: "false"
