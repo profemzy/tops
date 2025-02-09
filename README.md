@@ -1,8 +1,6 @@
 # TitansOps - IT Operations Management Platform
 
-![CI](https://github.com/infotitans/titansops/workflows/CI/badge.svg?branch=main)
-
-TitansOps is an IT operations management platform developed by InfoTitans, designed to streamline and automate IT consulting operations. This application helps manage client projects, resources, and IT infrastructure monitoring.
+# TitansOps is an IT operations management platform developed by InfoTitans, designed to streamline and automate IT consulting operations. This application helps manage client projects, resources, and IT infrastructure monitoring.
 
 **This app is using Flask 3.1.0 and Python 3.13.1**
 
