@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TitansOps - {% block title %}{% endblock %}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="TitansOps - IT Operations Management Platform by InfoTitans">
+
+    <!-- Add modern fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ static_url_for('static', filename='css/app.css') }}">
+    <script defer src="{{ static_url_for('static', filename='js/app.js') }}"></script>
+  </head>
+
+  <body class="flex min-h-screen bg-slate-50 font-['Inter'] overflow-hidden">
+    <!-- Mobile Menu Button -->
+    <button title="test" id="mobile-menu-button" class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-slate-800 text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 z-40 w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white transition-transform duration-300 ease-in-out lg:relative">
+      <div class="p-6">
+        <div class="flex items-center space-x-3">
+          <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">TitansOps</h1>
+        </div>
+      </div>
+      
+      <nav class="mt-6">
+        <div class="px-4 space-y-1">
+          <a href="/" class="flex items-center px-4 py-3 text-gray-100 hover:bg-slate-700/50 rounded-lg transition-all duration-200">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span class="font-medium">Dashboard</span>
+          </a>
+          
+          <a href="/#" class="flex items-center px-4 py-3 text-gray-100 hover:bg-slate-700/50 rounded-lg transition-all duration-200">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <span class="font-medium">Projects</span>
+          </a>
+
+          <a href="/#" class="flex items-center px-4 py-3 text-gray-100 hover:bg-slate-700/50 rounded-lg transition-all duration-200">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+            <span class="font-medium">Monitoring</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col w-full overflow-hidden">
+      <!-- Top Header -->
+      <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Version and Environment -->
+            <div class="flex items-center space-x-4 ml-12 lg:ml-0">
+              <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                v{{ flask_ver }}
+              </span>
+              <div class="hidden sm:flex items-center">
+                <div class="w-2 h-2 rounded-full {{ 'bg-green-500' if not debug else 'bg-yellow-500' }} mr-2"></div>
+                <span class="text-sm text-gray-600">{{ "Production" if not debug else "Development" }}</span>
+              </div>
+            </div>
+            
+            <!-- User Profile and Notifications -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+              <button class="relative p-2 rounded-full text-gray-400 hover:text-gray-500 hover:bg-gray-100 transition-all duration-200">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                <span class="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
+              </button>
+              
+              <!-- Replace the img tag in the user profile section with this SVG icon -->
+              <div class="flex items-center space-x-3">
+                <div class="text-right hidden sm:block">
+                  <p class="text-sm font-medium text-gray-700 truncate">Admin User</p>
+                  <p class="text-xs text-gray-500 truncate">admin@titansops.com</p>
+                </div>
+                <button title="test" class="flex items-center justify-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 h-8 w-8 sm:h-9 sm:w-9 bg-gray-100 hover:bg-gray-200 transition-colors duration-200">
+                  <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto bg-gray-50 p-4 sm:p-6">
+        <div class="max-w-7xl mx-auto">
+          {% block body %}{% endblock %}
+        </div>
+      </main>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-30 lg:hidden hidden" onclick="closeMobileMenu()"></div>
+  </body>
+
+  <script>
+    function closeMobileMenu() {
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebar-overlay').classList.add('hidden');
+    }
+
+    document.getElementById('mobile-menu-button').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('sidebar-overlay').classList.toggle('hidden');
+    });
+
+    // Close menu when screen size changes to desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 1024) { // lg breakpoint
+        closeMobileMenu();
+      }
+    });
+  </script>
+</html>
