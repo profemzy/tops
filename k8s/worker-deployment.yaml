@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: titansops:latest
+        image: wackopsprodacr.azurecr.io/tops-worker:0.0.1
         command: ["celery"]
         args: ["-A", "titansops.app.celery_app", "worker", "-l", "info"]
         resources:
@@ -28,3 +28,25 @@ spec:
           value: "titansops.app"
         - name: FLASK_DEBUG
           value: "false"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DATABASE_USERNAME
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DATABASE_PASSWORD
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DATABASE_HOST
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DJANGO_SECRET_KEY
+        - name: REDIS_URL
+          value: "redis://titansops-redis:6379/0"

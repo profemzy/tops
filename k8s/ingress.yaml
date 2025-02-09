@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: tops-ingress
+  namespace: wackops
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: x.ops.infotitans.ca
+    http:
+      paths:
+      - backend:
+          service:
+            name: titansops-web
+            port:
+              number: 8000
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - x.ops.infotitans.ca
+    secretName: x-ops-infotitans-secret

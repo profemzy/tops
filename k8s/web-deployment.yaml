@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: titansops:latest
+        image: wackopsprodacr.azurecr.io/tops-web:0.0.1
         ports:
         - containerPort: 8000
         resources:
@@ -51,6 +51,13 @@ spec:
             secretKeyRef:
               name: tms-secret
               key: DATABASE_HOST
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: tms-secret
+              key: DJANGO_SECRET_KEY
+        - name: SERVER_NAME
+          value: "x.ops.infotitans.ca"
         volumeMounts:
         - name: public
           mountPath: /app/public
